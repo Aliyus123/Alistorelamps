@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sign In — Alistore Study Lamps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+ 
+<header class="topbar">
+  <a href="index.html" class="brand" aria-label="Alistore Study Lamps — home">
+    <img src="images/logo.png" alt="Alistore Study Lamps" class="brand-logo">
+  </a>
+  <div class="topbar-right">
+    <a href="index.html" class="auth-link mono" style="font-size:0.8rem;"><button class="add-btn" id="modalAddBtn">← Back to store</button></a>
+  </div>
+</header>
+ 
+<div class="auth-wrap">
+<div class="auth-card">
+ 
+  <!-- ============ SIGNED-OUT VIEW ============ -->
+  <div id="authView">
+    <h1 id="formTitle">Sign in</h1>
+    <p class="auth-sub" id="formSubtitle">Welcome back. Enter your details below.</p>
+ 
+    <div class="mode-switch">
+      <button type="button" id="modeSignIn" class="active">Sign in</button>
+      <button type="button" id="modeSignUp">Create account</button>
+    </div>
+ 
+    <form id="authForm" novalidate>
+      <div class="field" id="f-email">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+        <div class="field-error">Enter a valid email address.</div>
+      </div>
+ 
+      <div class="field" id="f-password">
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+          <button type="button" class="toggle-visibility" id="toggleVisibility" aria-label="Show password">👁</button>
+        </div>
+        <div class="field-error" id="passwordError">Password must be at least 6 characters.</div>
+      </div>
+ 
+      <div class="row-between">
+        <label class="remember-me">
+          <input type="checkbox" id="rememberMe"> Remember me
+        </label>
+        <a href="#" class="forgot-link" id="forgotPasswordLink">Forgot password?</a>
+      </div>
+ 
+      <button type="submit" class="submit-btn" id="submitBtn">Sign in</button>
+ 
+      <div class="form-message" id="formMessage"></div>
+    </form>
+ 
+    <div class="divider">OR</div>
+ 
+    <button type="button" class="google-btn" id="googleSignInBtn">
+      <span aria-hidden="true">G</span> Continue with Google
+    </button>
+ 
+    <p class="footer-note">
+      <a href="index.html">← Back to the shop</a>
+    </p>
+  </div>
+ 
+  <!-- ============ SIGNED-IN VIEW ============ -->
+  <div class="logged-in-panel" id="loggedInPanel">
+    <div class="success-icon">
+      <img src="images/logo.png" alt="Alistore" class="logo-badge">
+      <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <h1>Welcome back!</h1>
+    <p class="logged-in-email">Logged in as <span class="user-email" id="loggedInEmail"></span></p>
+ 
+    <div class="logged-in-actions">
+      <a class="primary-nav-btn" id="continueBtn" href="index.html">Continue to store</a>
+      <button class="secondary-nav-btn" id="signOutBtn">Sign out</button>
+    </div>
+ 
+    <div class="order-history">
+      <h3>Your Orders</h3>
+      <div id="orderHistoryList"><p class="order-history-empty">No orders placed yet.</p></div>
+    </div>
+  </div>
+ 
+</div>
+</div>
+ 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="Products.js"></script>
+<script src="cart.js"></script>
+<script src="orders.js"></script>
+<script src="auth.js"></script>
+<script src="Login.js"></script>
+</body>
+</html>

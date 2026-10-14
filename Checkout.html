@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Checkout — Alistore Study Lamps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+ 
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <a href="index.html" class="brand" aria-label="Alistore Study Lamps — home">
+    <img src="images/logo.png" alt="Alistore Study Lamps" class="brand-logo">
+  </a>
+  <div class="topbar-right">
+    <div class="auth-status" id="authStatus">
+      <a href="login.html?redirect=checkout.html" class="auth-link"><button class="add-btn" id="modalAddBtn">Sign In</button></a>
+    </div>
+    <button class="cart-toggle" id="cartToggle" aria-haspopup="dialog" aria-expanded="false" aria-label="Open cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+      <span class="count mono" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+ 
+<div class="checkout-page-head">
+  <div class="checkout-page-head-inner">
+    <h1 style="font-size:1.05rem;">Checkout</h1>
+    <a class="back-link" href="index.html">← Continue shopping</a>
+  </div>
+</div>
+ 
+<!-- ============ CHECKOUT SECTION ============ -->
+<section id="checkout-section">
+ 
+  <!-- Shown only if the cart is empty when this page loads. -->
+  <div class="empty-cart-msg" id="emptyCartMsg" style="display:none;">
+    <p>Your cart is empty, so there's nothing to check out yet.</p>
+    <p style="margin-top:10px;"><a href="index.html">Browse the lineup →</a></p>
+  </div>
+ 
+  <div id="checkoutForm">
+    <div class="checkout-grid">
+      <div>
+        <div class="field" id="f-name">
+          <label for="fullName">Full name</label>
+          <input type="text" id="fullName" placeholder="e.g. Yusif Mohammed" autocomplete="name">
+          <div class="error-msg">Enter your full name.</div>
+        </div>
+ 
+        <div class="field-row">
+          <div class="field" id="f-phone">
+            <label for="phone">WhatsApp / Phone number</label>
+            <input type="tel" id="phone" placeholder="05XX XXX XXX" autocomplete="tel">
+            <div class="error-msg">Enter a valid phone number.</div>
+          </div>
+          <div class="field" id="f-email">
+            <label for="email">Email (optional)</label>
+            <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+            <div class="error-msg">Enter a valid email.</div>
+          </div>
+        </div>
+ 
+        <div class="field" id="f-address">
+          <label for="address">Delivery address</label>
+          <textarea id="address" rows="2" placeholder="House number, street, area"></textarea>
+          <div class="error-msg">Enter a delivery address.</div>
+        </div>
+ 
+        <div class="field-row">
+          <div class="field" id="f-city">
+            <label for="city">City / Town</label>
+            <input type="text" id="city" placeholder="e.g. Tamale">
+            <div class="error-msg">Enter a city.</div>
+          </div>
+          <div class="field" id="f-region">
+            <label for="region">Region</label>
+            <select id="region">
+              <option value="">Select region</option>
+              <option>Greater Accra</option>
+              <option>Ashanti</option>
+              <option>Northern</option>
+              <option>Western</option>
+              <option>Eastern</option>
+              <option>Central</option>
+              <option>Volta</option>
+              <option>Bono</option>
+              <option>Upper East</option>
+              <option>Upper West</option>
+              <option>Other</option>
+            </select>
+            <div class="error-msg">Select a region.</div>
+          </div>
+        </div>
+ 
+        <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--off);text-transform:uppercase;letter-spacing:0.04em;margin:20px 0 10px;">Payment method</label>
+        <div class="pay-methods" id="payMethods">
+          <label class="pay-method selected" data-val="momo">
+            <input type="radio" name="pay" value="momo" checked> <a href="https://paystack.shop/pay/alistorelamp"> Online Payment</a>
+          </label>
+          <label class="pay-method" data-val="cash">
+            <input type="radio" name="pay" value="cash"> Cash on Delivery
+          </label>
+          <!-- <label class="pay-method" data-val="card">
+            <input type="radio" name="pay" value="card"> Card
+          </label> -->
+        </div>
+      </div>
+ 
+      <!-- Static block: sits in normal document flow, no sticky/floating
+           positioning, so it never drifts or jumps while scrolling. -->
+      <div class="order-summary">
+        <h3>Order summary</h3>
+        <span class="spec" id="checkoutItemSpec" style="display:block;margin-bottom:10px;">0 items</span>
+        <div id="orderLines"></div>
+        <div class="summary-row" style="margin-top:14px;">
+          <span>Subtotal</span><span id="sumSubtotal" class="mono">GHS 0.00</span>
+        </div>
+        <div class="summary-row">
+          <span>Delivery</span><span id="sumDelivery" class="mono">GHS 15.00</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span><span class="amt" id="sumTotal">GHS 0.00</span>
+        </div>
+        <button class="place-order-btn" id="placeOrderBtn">Place order</button>
+        <!-- Shown only when the customer clicks Place order while signed out -->
+        <p id="loginRequiredMsg" style="display:none;margin-top:12px;">
+          Please <a href="login.html?redirect=checkout.html">sign in</a> to complete your order.
+        </p>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="confirm-panel" id="confirmPanel">
+    <div class="success-icon">
+      <img src="images/logo.png" alt="Alistore" class="logo-badge">
+      <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <h2>Order Confirmed!</h2>
+    <p class="success-msg">Thank you for your purchase. Your order has been successfully placed.</p>
+    <div class="order-id mono" id="orderIdDisplay"></div>
+    <p class="delivery-info">We'll contact you via WhatsApp within 2 hours to confirm delivery details and timing.</p>
+    <p class="note">Your order is now saved to your account and can be reviewed anytime from your profile.</p>
+    <a class="back-shop-btn" href="index.html">Continue Shopping</a>
+  </div>
+</section>
+ 
+<footer>
+  Alistore Study Lamps · <span>Quality Light. Better Life.</span> · WhatsApp 0536608724
+</footer>
+ 
+<!-- ============ CART DRAWER (lets you tweak the cart before ordering) ============ -->
+<div class="overlay" id="overlay"></div>
+<aside class="cart-drawer" id="cartDrawer" role="dialog" aria-label="Shopping cart" aria-modal="true">
+  <div class="cart-head">
+    <h2>Your Cart</h2>
+    <button class="close-btn" id="closeCart" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-summary">
+    <div class="summary-row"><span>Subtotal</span><span class="mono" id="drawerSubtotal">GHS 0.00</span></div>
+    <div class="summary-row total"><span>Total</span><span class="amt mono" id="drawerTotal">GHS 0.00</span></div>
+    <button class="checkout-btn" id="goToCheckoutBtn" disabled>You're already here ✓</button>
+  </div>
+</aside>
+ 
+<!-- ============ PRODUCT DETAIL MODAL (tap a product name in the summary) ============ -->
+<div class="overlay" id="productOverlay"></div>
+<div class="product-modal" id="productModal" role="dialog" aria-modal="true" aria-label="Product details">
+  <button class="close-btn" id="closeProductModal" aria-label="Close product details">&times;</button>
+  <div class="product-modal-grid">
+    <div class="gallery">
+      <div class="gallery-main" id="galleryMain"></div>
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+    <div class="product-info-panel">
+      <h2 id="modalProductName"></h2>
+      <p class="price mono" id="modalProductPrice"></p>
+      <p class="modal-desc" id="modalProductDesc"></p>
+      <button class="add-btn" id="modalAddBtn">Add to cart</button>
+    </div>
+  </div>
+</div>
+ 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="Products.js"></script>
+<script src="cart.js"></script>
+<script src="cartdrawer.js"></script>
+<script src="modal.js"></script>
+<script src="auth.js"></script>
+<script src="orders.js"></script>
+<script src="sheet.js"></script>
+<script src="Checkout.js"></script>
+</body>
+</html>
